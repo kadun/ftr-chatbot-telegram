@@ -1,38 +1,38 @@
-🌦️ Telegram Weather Bot (Brasil)
+# Telegram Weather Bot (Brasil)
 
-Este projeto consiste em um bot para Telegram que informa o clima de cidades do Brasil a partir do nome da cidade informado pelo usuário.
+Este projeto consiste em um bot para Telegram que informa o clima de cidades do Brasil a partir do nome da cidade informada pelo usuário.
 
 O bot consulta dados meteorológicos em tempo real utilizando a OpenWeather API e responde automaticamente pelo Telegram.
 
-📋 Funcionalidades
+## Funcionalidades
 
-Consulta e retorna p clima (temperatura) por nome da cidade brasileira
+Consulta e retorna o clima (temperatura) por nome da cidade brasileira.
 
-🚀 Como executar o projeto
+## Como executar o projeto
 
-1. Importar o arquivo do workflow (workflow-telegram-chatbot.json) no n8n
+Importe o arquivo do workflow (workflow-telegram-chatbot.json) no seu n8n.
 
 Passos:
 
-Acesse sua instância do n8n
+1. Acesse sua instância do n8n
 
-Vá em Import
+2. Vá em Import
 
-Selecione o arquivo workflow-telegram-chatbot.json
+3. Selecione o arquivo workflow-telegram-chatbot.json
 
-Confirme a importação
+4. Confirme a importação
 
-2. Configurar as variáveis de ambiente
+## Configurar as variáveis de ambiente
 
 Após importar o workflow, você deve substituir as variáveis abaixo por valores válidos:
 
-🔑 Variáveis obrigatórias
+### Variáveis obrigatórias:
 
-OPENWEATHER_API_KEY (Chave da API do OpenWeather. Pode ser obtida em: https://openweathermap.org/api. Deve ser incluída no lugar do "OPENWEATHER_API_KEY" presente no arquivo do wrokflow)
+- **OPENWEATHER_API_KEY** (Chave da API do OpenWeather. Pode ser obtida em: https://openweathermap.org/api. Deve ser incluída no lugar do "OPENWEATHER_API_KEY" presente no arquivo do wrokflow)
 
-TELEGRAM_BOT_TOKEN (Token do bot do Telegram. Pode ser criado via @BotFather. Deve ser incluída como uma Credencial do Telegram no seu n8n: credentials.telegamApi)
+- **TELEGRAM_BOT_TOKEN** (Token do bot do Telegram. Pode ser criado via @BotFather. Deve ser incluída como uma Credencial do Telegram no seu n8n: credentials.telegamApi)
 
-🛠️ Requisitos
+## Requisitos
 
 Instância funcional do n8n
 
@@ -40,7 +40,7 @@ Conta e API Key válida no OpenWeather
 
 Bot criado no Telegram
 
-📌 Observações
+## Observações
 
 O bot reconhece nomes de cidades do Brasil
 
@@ -50,6 +50,6 @@ Certifique-se de que o workflow esteja ativado no n8n para que o bot funcione co
 
 Use "Campinas, SP" (ou otra cidade existente) para testar uma resposta de sucesso, e "XYZ" (ou qualquer outra palavra que não seja uma cidade) para testar uma resposta de cidade cinválida.
 
-📄 Licença
+## Licença
 
 Este projeto foi desenvolvido fins educacionais
