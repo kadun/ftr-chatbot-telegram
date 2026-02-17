@@ -1,0 +1,208 @@
+{
+  "name": "kadun-chatbot-clima",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        -16
+      ],
+      "id": "60cf00e7-8374-476a-8dcc-202c7c562c0a",
+      "name": "Telegram Trigger",
+      "webhookId": "8ce7ce9e-2585-419c-ac81-16099fd45071",
+      "credentials": {
+        "telegramApi": {
+          "id": "LdIRtSBqyrErIoEZ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f798bbb5-600b-4025-9ce1-f960f59d5aab",
+              "name": "queue",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "41317c86-5cc6-4aa7-a4bc-0e3360ead127",
+              "name": "chat_id",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -192,
+        -16
+      ],
+      "id": "ac65d72c-0b16-4f24-9ac3-455e9c62a90d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "https://api.openweathermap.org/data/2.5/weather",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.queue.toLowerCase().replaceAll(', ',',').replaceAll(' ,',',') }},BR"
+            },
+            {
+              "name": "appid",
+              "value": "OPENWEATHER_API_KEY"
+            },
+            {
+              "name": "lang",
+              "value": "pt_br"
+            },
+            {
+              "name": "units",
+              "value": "metric"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        16,
+        -16
+      ],
+      "id": "dba4f1bf-4ae6-40a9-807d-f9732c34b247",
+      "name": "HTTP Request",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=🌤️ A temperatura em {{ $('Edit Fields').item.json.queue }} é de {{ parseInt($json.main.temp) }}ºC",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        -112
+      ],
+      "id": "6b0b634f-abb9-4de8-97c7-557b0dffe51c",
+      "name": "Send a text message",
+      "webhookId": "d1d15bd1-0dc4-4827-8e65-1eaca32206f4",
+      "credentials": {
+        "telegramApi": {
+          "id": "LdIRtSBqyrErIoEZ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=❌ Desculpe, não conheço a cidade \"{{ $('Telegram Trigger').item.json.message.text }}\". Me informe o nome e a UF de uma cidade brasileira. Exemplo: \"Campinas, SP\"",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        80
+      ],
+      "id": "af80a067-8154-4ccf-962a-c5e8419ff889",
+      "name": "Send a text message1",
+      "webhookId": "de593980-965b-421a-b8dd-617b5f0e0917",
+      "credentials": {
+        "telegramApi": {
+          "id": "LdIRtSBqyrErIoEZ",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1dae8bc8-1da5-4462-be7a-9e7fd0bb8dea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0e3a9168965547120106d9b68d96d36644e894f101e8b240184fe6006e8053a0"
+  },
+  "id": "W7IdD9v34ORUyG43",
+  "tags": [
+    {
+      "updatedAt": "2026-02-16T07:40:42.043Z",
+      "createdAt": "2026-02-16T07:40:42.043Z",
+      "id": "8b6SiVE6yq72BzM6",
+      "name": "Testes"
+    }
+  ]
+}
