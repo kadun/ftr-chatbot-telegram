@@ -28,9 +28,11 @@ Após importar o workflow, você deve substituir as variáveis abaixo por valore
 
 ### Variáveis obrigatórias:
 
-- **OPENWEATHER_API_KEY** (Chave da API do OpenWeather. Pode ser obtida em: https://openweathermap.org/api. Deve ser incluída no lugar do "OPENWEATHER_API_KEY" presente no arquivo do wrokflow)
+- **OPENWEATHER_API_TOKEN** (Chave da API do OpenWeather. Obtida em: https://openweathermap.org/api e deve ser incluída no Credencial Manager do seu n8n com o tipo "Query Auth" com nome "OpenWeatherToken" contendo a configuração de variável { name: 'appid', value: 'SEU_OPENWEATHER_API_TOKEN' })
+![exemplo](image1.png)
+Importante: Não se esqueça de atualizar o apontamento da sua variável após importar pois o ID da credencial pode mudar e quebrar o fluxo, então é importante que crie a credential e verifique o nó HTTP se está puxando corretamente a chave do token.
 
-- **TELEGRAM_BOT_TOKEN** (Token do bot do Telegram. Pode ser criado via @BotFather. Deve ser incluída como uma Credencial do Telegram no seu n8n: credentials.telegamApi)
+- **TELEGRAM_BOT_TOKEN** (Token do bot do Telegram. Pode ser criado via @BotFather. Deve ser incluída como uma Credencial do Telegram pelo nó no seu n8n: credentials.telegamApi)
 
 ## Requisitos
 
@@ -48,7 +50,7 @@ Certifique-se de que o workflow esteja ativado no n8n para que o bot funcione co
 
 É recomendado testar o fluxo manualmente após a configuração. O retorno com sucesso deve retornar uma mensagem do tipo "A temperatura em Campinas é de 22ºC" e o retorno de erro deve retornar um mensagem do tipo "Desculpe, não conheço a cidade XYZ. Me informe o nome e a UF de uma cidade brasileira. Exemplo: Campinas, SP"
 
-Use "Campinas, SP" (ou otra cidade existente) para testar uma resposta de sucesso, e "XYZ" (ou qualquer outra palavra que não seja uma cidade) para testar uma resposta de cidade cinválida.
+Use "Campinas, SP" (ou otra cidade existente) para testar uma resposta de sucesso, e "XYZ, SP" (ou qualquer outra palavra que não seja uma cidade) para testar uma resposta de cidade inválida. Teste também um erro de retorno HTTP informando uma nome se o estado, exemplo "ABCDE"
 
 ## Licença
 
